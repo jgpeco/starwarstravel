@@ -77,7 +77,7 @@ const App = () => {
     }
 
     const consumablesInHours = consumablesQuantity * convert
-    return Math.round(hoursToArrive / consumablesInHours)
+    return Math.floor(hoursToArrive / consumablesInHours)
   }
 
   const handleSubmit = async (e) => {
@@ -87,8 +87,14 @@ const App = () => {
     const { data } = response
     
     const ships = data.results
-    const shipsWithStops = ships.map(ship => ship.stops = calculateStops(ship))
-
+    const shipsWithStops = ships.map(ship => {
+      const newShip = {}
+      newShip.name = ship.name
+      newShip.MGLT = ship.MGLT
+      newShip.stops = calculateStops(ship)
+      return newShip
+    })
+    console.log(shipsWithStops)
     setAllShips(ships)
   }
 
