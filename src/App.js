@@ -1,37 +1,26 @@
 import React, {useState, useEffect} from 'react'
-import axios from 'axios'
+import fetchHelper from './services/ships'
 
-const Ship = ({shipInfo}) => {
-  return (
-    <div>
-      <p>Name: {shipInfo.name}</p>
-      <p>MGLT: {shipInfo.MGLT}</p>
-      <p>Consumables Time: {shipInfo.consumables}</p>
-    </div>
-  )
-}
+import SingleShip from './components/SingleShip'
 
 const App = () => {
   //user input (mglts)
-  const [distance, setDistance] = useState(0)
+  const [distance, setDistance] = useState('')
   //fetch ships
   const [allShips, setAllShips] = useState([])
+  const [showShips, setShowShips] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
   const [page, setPage] = useState(1)
   const [nextButton, setNextButton] = useState(false)
   const [prevButton, setPrevButton] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
-    getAllShips()
+    getShips()
     // eslint-disable-next-line
   }, [page])
 
-  const getAllShips = async () => {
-    const response = await axios.get(`https://swapi.dev/api/starships/?page=${page}`)
-    const { data } = response
-    
-    const ships = data.results
-    setAllShips(ships)
-
+  const pageTracker = (data) => {
     if(data.previous) {
       setPrevButton(true)
     } else {
@@ -42,10 +31,26 @@ const App = () => {
     } else {
       setNextButton(false)
     }
+  } 
+
+  const shipsWithStopsGenerator = (ships) => {
+    return ships.map(ship => {
+      const newShip = {}
+      newShip.name = ship.name
+      newShip.MGLT = ship.MGLT
+      newShip.stops = fetchHelper.calculateStops(ship, distance)
+      newShip.id = ship.created
+      return newShip
+    })
   }
 
-  const handleGetButton = () => {
-    setPage(1)
+  const getShips = async () => {
+    const data = await fetchHelper.getAllShips(page)
+    
+    const ships = data.results
+    const shipsWithStops = shipsWithStopsGenerator(ships)
+    setAllShips(shipsWithStops)
+    pageTracker(data)
   }
 
   const handlePrevButton = () => {
@@ -56,46 +61,29 @@ const App = () => {
     setPage(currPage => currPage + 1)
   }
 
-  const calculateStops = (ship) => {
-    const mglt = Number(ship.MGLT)
-    const hoursToArrive = distance / mglt
-
-    const consumables = ship.consumables
-
-    //gets just the number of days, weeks, months or years. it will be converted below
-    const consumablesQuantity = Number(consumables.split(' ')[0])
-    let convert = 0
-    
-    //converts the consumable quantity to hours
-    if(ship.consumables && ship.consumables !== 'unknown'){
-      if(consumables.includes('day')) convert = 24
-      if(consumables.includes('week')) convert = 168
-      if(consumables.includes('month')) convert = 720
-      if(consumables.includes('year')) convert = 8760
-    } else {
-      return 'Unknown'
-    }
-
-    const consumablesInHours = consumablesQuantity * convert
-    return Math.floor(hoursToArrive / consumablesInHours)
+  const cleanForms = () => {
+    setDistance('')
+    setQuery('')
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    getShips()
+    setShowShips(true)
+    setShowSearch(true)
+    cleanForms()
+  }
 
-    const response = await axios.get(`https://swapi.dev/api/starships/?page=${page}`)
-    const { data } = response
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    const data = await fetchHelper.searchOneShip(query)
     
     const ships = data.results
-    const shipsWithStops = ships.map(ship => {
-      const newShip = {}
-      newShip.name = ship.name
-      newShip.MGLT = ship.MGLT
-      newShip.stops = calculateStops(ship)
-      return newShip
-    })
-    console.log(shipsWithStops)
-    setAllShips(ships)
+    const shipsWithStops = shipsWithStopsGenerator(ships)
+    pageTracker(data)
+    setShowShips(true)
+    setAllShips(shipsWithStops)
+    cleanForms()
   }
 
   return (
@@ -107,20 +95,31 @@ const App = () => {
               name='distance'
               placeholder='Type the distance...'
               value={distance}
-              onChange={({ target }) => setDistance(target.value)}
+              onChange={({ target }) => setDistance(Number(target.value))}
           />
           <button type='submit'>Calculate!</button>
       </form>
+
+      { showSearch && 
+            <form onSubmit={handleSearch}>
+            <input
+                    id='input-query'
+                    name='query'
+                    placeholder='Type the name of the starship'
+                    value={query}
+                    onChange={({ target }) => setQuery(target.value)}
+                />
+                <button type='submit'>Search</button>
+            </form>
+      }
         
 
-      { allShips.length ?
-          allShips.map(ship => 
-            <Ship key={ship.url} shipInfo={ship} />
-          ) :
-          <button onClick={handleGetButton}>Click to get all the ships</button>
+      { allShips.length && showShips
+          ? allShips.map(ship => <SingleShip key={ship.id} shipInfo={ship} />)
+          : null
       }
       { prevButton ? <button onClick={handlePrevButton}>Previous Ships</button> : null }
-      { nextButton ? <button onClick={handleNextButton}>Next Ships</button> : null }
+      { nextButton && showShips ? <button onClick={handleNextButton}>Next Ships</button> : null }
     </div>
   );
 }
