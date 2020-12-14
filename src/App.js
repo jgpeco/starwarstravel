@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
 const Ship = ({shipInfo}) => {
@@ -13,40 +13,53 @@ const Ship = ({shipInfo}) => {
 
 const App = () => {
   const [allShips, setAllShips] = useState([])
-  const [nextButton, setNextButton] = useState('')
-  const [prevButton, setPrevtButton] = useState('')
+  const [page, setPage] = useState(0)
+  const [nextButton, setNextButton] = useState(false)
+  const [prevButton, setPrevButton] = useState(false)
+
+  useEffect(() => {
+    getAllShips()
+    // eslint-disable-next-line
+  }, [page])
 
   const getAllShips = async () => {
-    const response = await axios.get(`https://swapi.dev/api/starships/?page=2`)
+    const response = await axios.get(`https://swapi.dev/api/starships/?page=${page}`)
     const { data } = response
     
     const ships = data.results
     setAllShips(ships)
 
-    if(data.previous) setPrevtButton(data.previous)
-    if(data.next) setNextButton(data.next)
+    if(data.previous) {
+      setPrevButton(true)
+    } else {
+      setPrevButton(false)
+    }
+    if(data.next) {
+      setNextButton(true)
+    } else {
+      setNextButton(false)
+    }
   }
 
   const handleGetButton = () => {
-    getAllShips()
+    setPage(1)
   }
 
   const handlePrevButton = () => {
-    console.log('hi from prev button')
+    setPage(currPage => currPage - 1)
   }
 
   const handleNextButton = () => {
-    console.log('hi from next button')
+    setPage(currPage => currPage + 1)
   }
 
   return (
     <div>
-      <button onClick={handleGetButton}>Click to get all the ships</button>
-      { allShips ?
+      { allShips.length ?
           allShips.map(ship => 
             <Ship key={ship.url} shipInfo={ship} />
           ) :
-          null
+          <button onClick={handleGetButton}>Click to get all the ships</button>
       }
       { prevButton ? <button onClick={handlePrevButton}>Previous Ships</button> : null }
       { nextButton ? <button onClick={handleNextButton}>Next Ships</button> : null }
