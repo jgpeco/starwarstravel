@@ -1,15 +1,17 @@
 import React from 'react'
 
 const Ship = ({shipInfo}) => {
-    const {name, MGLT, stops} = shipInfo
-    if(stops === 'Unknown') return (<p>{name} - No Data</p>)
-  
+    const {name, MGLT, stops} = shipInfo 
     return (
-      <div>
-        <p>Name: {name}</p>
-        <p>MGLT/hour: {MGLT}</p>
-        <p>Ressuply Stops: {stops}</p>
-      </div>
+      <>
+        <tr>
+          <td className="table-primary">
+          {name}
+          </td>
+          <td>{MGLT}</td>
+          <td>{stops}</td>
+        </tr>
+      </>
     )
 }
 

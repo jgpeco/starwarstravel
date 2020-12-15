@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Russo+One&display=swap');
+.table table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+.table tr {
+  background: #c8c8c8;
+}
+.table tr:hover {
+  background: #fffee0;
+}
+.table tr td {
+  color: #000;
+}
+.table th,
+.table td {
+  padding: 0.5rem;
+}
+.table th {
+  font-size: 1.2rem;
+  border-right: 1px solid #fffee0;
+  background-color: #000;
+  color: #fff;
+}
+.table td {
+  text-align: center;
+}
+.table td:last-child,
+.table th:last-child {
+  border-right: none;
+}
+.table .table-primary {
+  width: 30%;
+}
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 3rem;
+}
+.large {
+  font-size: 4rem;
+  line-height: 1.2;
+}
+.lead-title {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.lead {
+  font-size: 1.5rem;
+}
+.form-text {
+  font-size: 1.2rem;
+}
+.info-text {
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+.btn {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease-in;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+}
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+.btn:hover {
+  background-color: #b3b3b3;
+  color: #fff;
+}
+.forms {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.forms input[type='text'] {
+  padding: 0.95rem 2rem;
+  width: 80%;
+  font-size: 1.2rem;
+  font: inherit;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  min-height: 100%;
+}
+html {
+  height: 100vh;
+  background: url('https://res.cloudinary.com/dxs3wvxxw/image/upload/v1608041042/starwarsNata/stars-bg.png')
+    no-repeat center center;
+  background-attachment: scroll;
+  background-color: #000;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  z-index: -1;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-areas:
+    'nav'
+    'header'
+    'distance'
+    'ships'
+    'footer';
+}
+nav {
+  grid-area: 'nav';
+  background-color: #000;
+  border-bottom: 1px solid #c8c8c8;
+}
+nav .navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  font-family: 'Russo One', sans-serif;
+  color: #ffe81f;
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+header {
+  grid-area: 'header';
+}
+header .header--info {
+  padding: 2rem 0;
+  text-align: center;
+}
+.distance {
+  grid-area: 'distance';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+.distance--title {
+  text-align: center;
+}
+.distance .small--info {
+  margin: 1rem 0;
+}
+.ships {
+  grid-area: 'ships';
+  padding: 2rem 0;
+}
+.ships--grid__navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ships--grid__navigation button {
+  margin: 1rem;
+}
+footer {
+  grid-area: 'footer';
+  padding: 1rem 0;
+}
+footer .footer {
+  text-align: center;
+}

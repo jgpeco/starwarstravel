@@ -15,9 +15,11 @@ const App = () => {
   const [allShips, setAllShips] = useState([])
   const [showShips, setShowShips] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
+  //pagetracker
   const [page, setPage] = useState(1)
   const [nextButton, setNextButton] = useState(false)
   const [prevButton, setPrevButton] = useState(false)
+  //search
   const [query, setQuery] = useState('')
 
   useEffect(() => {
@@ -45,6 +47,10 @@ const App = () => {
       newShip.MGLT = ship.MGLT
       newShip.stops = fetchHelper.calculateStops(ship, distance)
       newShip.id = ship.created
+
+      if(newShip.stops === 'Unknown'){
+        newShip.MGLT = 'No Data'
+      }
       return newShip
     })
   }
@@ -67,12 +73,12 @@ const App = () => {
   }
 
   const cleanForms = () => {
-    setDistance('')
     setQuery('')
   }
 
   const handleDistanceSubmit = (e) => {
     e.preventDefault()
+    setPage(currPage => currPage = 1)
     getShips()
     setShowShips(true)
     setShowSearch(true)
@@ -97,21 +103,21 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <Header />
-      <DistanceForm handleSubmit={handleDistanceSubmit} distance={distance} handleChange={handleDistanceChange} />
-      { showSearch && 
-        <SearchForm handleSearch={handleSearch} query={query} handleChange={handleQueryChange} />
-      }
-
-      <ShipsTable 
-        allShips={allShips} 
-        showShips={showShips}
-        nextButton={nextButton}
-        prevButton={prevButton}
-        handleNextButton={handleNextButton}
-        handlePrevButton={handlePrevButton}
-      />
-
+      <div className="container">
+        <Header />
+        <DistanceForm handleSubmit={handleDistanceSubmit} distance={distance} handleChange={handleDistanceChange} />
+        { showSearch && 
+          <SearchForm handleSearch={handleSearch} query={query} handleChange={handleQueryChange} />
+        }
+        <ShipsTable 
+          allShips={allShips} 
+          showShips={showShips}
+          nextButton={nextButton}
+          prevButton={prevButton}
+          handleNextButton={handleNextButton}
+          handlePrevButton={handlePrevButton}
+        />
+      </div>
       <Footer />
     </>
   );

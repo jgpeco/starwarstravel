@@ -2,15 +2,16 @@ import React from 'react'
 
 const SearchForm = ({handleSearch, query, handleChange}) => {
     return (
-        <form onSubmit={handleSearch}>
-        <input
+        <form className='forms' onSubmit={handleSearch}>
+            <input
+                type='text'
                 id='input-query'
                 name='query'
-                placeholder='Type the name of the starship'
+                placeholder="Type a startship name..."
                 value={query}
                 onChange={handleChange}
-            />
-            <button type='submit'>Search</button>
+            /> 
+            <button className='btn' type='submit'>Search</button>
         </form>
     )
 }
