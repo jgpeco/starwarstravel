@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import fetchHelper from './services/ships'
 
-import SingleShip from './components/SingleShip'
+import Navbar from './containers/Navbar'
+import Header from './containers/Header'
+import DistanceForm from './components/DistanceForm'
+import SearchForm from './components/SearchForm'
+import ShipsTable from './containers/ShipsTable'
+import Footer from './containers/Footer'
 
 const App = () => {
   //user input (mglts)
@@ -66,7 +71,7 @@ const App = () => {
     setQuery('')
   }
 
-  const handleSubmit = (e) => {
+  const handleDistanceSubmit = (e) => {
     e.preventDefault()
     getShips()
     setShowShips(true)
@@ -86,41 +91,29 @@ const App = () => {
     cleanForms()
   }
 
+  const handleDistanceChange = ({ target }) => setDistance(Number(target.value))
+  const handleQueryChange = ({ target }) => setQuery(target.value)
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <p>Type the travel distance in MegaLights (MGLT)</p>
-        <input
-              id='input-distance'
-              name='distance'
-              placeholder='Type the distance...'
-              value={distance}
-              onChange={({ target }) => setDistance(Number(target.value))}
-          />
-          <button type='submit'>Calculate!</button>
-      </form>
-
+    <>
+      <Navbar />
+      <Header />
+      <DistanceForm handleSubmit={handleDistanceSubmit} distance={distance} handleChange={handleDistanceChange} />
       { showSearch && 
-            <form onSubmit={handleSearch}>
-            <input
-                    id='input-query'
-                    name='query'
-                    placeholder='Type the name of the starship'
-                    value={query}
-                    onChange={({ target }) => setQuery(target.value)}
-                />
-                <button type='submit'>Search</button>
-            </form>
+        <SearchForm handleSearch={handleSearch} query={query} handleChange={handleQueryChange} />
       }
-        
 
-      { allShips.length && showShips
-          ? allShips.map(ship => <SingleShip key={ship.id} shipInfo={ship} />)
-          : null
-      }
-      { prevButton ? <button onClick={handlePrevButton}>Previous Ships</button> : null }
-      { nextButton && showShips ? <button onClick={handleNextButton}>Next Ships</button> : null }
-    </div>
+      <ShipsTable 
+        allShips={allShips} 
+        showShips={showShips}
+        nextButton={nextButton}
+        prevButton={prevButton}
+        handleNextButton={handleNextButton}
+        handlePrevButton={handlePrevButton}
+      />
+
+      <Footer />
+    </>
   );
 }
 
