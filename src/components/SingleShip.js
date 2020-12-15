@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Ship = ({shipInfo}) => {
-    const {name, MGLT, stops} = shipInfo 
+const Ship = ({ shipInfo }) => {
+    const { name, MGLT, stops } = shipInfo
     return (
       <>
         <tr>

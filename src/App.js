@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react'
 import fetchHelper from './services/ships'
 
 import Navbar from './containers/Navbar'
@@ -38,7 +39,7 @@ const App = () => {
     } else {
       setNextButton(false)
     }
-  } 
+  }
 
   const shipsWithStopsGenerator = (ships) => {
     return ships.map(ship => {
@@ -57,7 +58,7 @@ const App = () => {
 
   const getShips = async () => {
     const data = await fetchHelper.getAllShips(page)
-    
+
     const ships = data.results
     const shipsWithStops = shipsWithStopsGenerator(ships)
     setAllShips(shipsWithStops)
@@ -88,7 +89,7 @@ const App = () => {
   const handleSearch = async (e) => {
     e.preventDefault()
     const data = await fetchHelper.searchOneShip(query)
-    
+
     const ships = data.results
     const shipsWithStops = shipsWithStopsGenerator(ships)
     pageTracker(data)
@@ -106,11 +107,11 @@ const App = () => {
       <div className="container">
         <Header />
         <DistanceForm handleSubmit={handleDistanceSubmit} distance={distance} handleChange={handleDistanceChange} />
-        { showSearch && 
+        { showSearch &&
           <SearchForm handleSearch={handleSearch} query={query} handleChange={handleQueryChange} />
         }
-        <ShipsTable 
-          allShips={allShips} 
+        <ShipsTable
+          allShips={allShips}
           showShips={showShips}
           nextButton={nextButton}
           prevButton={prevButton}
@@ -120,7 +121,7 @@ const App = () => {
       </div>
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

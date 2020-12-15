@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DistanceForm = ({handleSubmit, distance, handleChange}) => {
+const DistanceForm = ({ handleSubmit, distance, handleChange }) => {
     return (
         <section className="distance">
             <div className="distance--title lead-title">
@@ -14,7 +14,7 @@ const DistanceForm = ({handleSubmit, distance, handleChange}) => {
                         placeholder='Type the distance...'
                         value={distance}
                         onChange={handleChange}
-                    /> 
+                    />
                     <button className='btn' type='submit'>Calculate!</button>
             </form>
             <small className='small--info'>Checkout below the amount of ressuply stops the starships in the Star Wars franchise needed to do to complete the distance provided. You can search for a specific ship by typing its name in the search box.</small>

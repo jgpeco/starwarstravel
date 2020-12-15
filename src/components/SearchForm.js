@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchForm = ({handleSearch, query, handleChange}) => {
+const SearchForm = ({ handleSearch, query, handleChange }) => {
     return (
         <form className='forms' onSubmit={handleSearch}>
             <input
@@ -10,7 +10,7 @@ const SearchForm = ({handleSearch, query, handleChange}) => {
                 placeholder="Type a startship name..."
                 value={query}
                 onChange={handleChange}
-            /> 
+            />
             <button className='btn' type='submit'>Search</button>
         </form>
     )

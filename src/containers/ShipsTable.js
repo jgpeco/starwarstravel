@@ -1,37 +1,26 @@
 import React from 'react'
-import SingleShip from '../components/SingleShip'
+import AllShips from '../components/AllShips'
+import NavigationButtons from '../components/NavigationButtons'
 
-const ShipsTable = ({allShips, showShips, prevButton, handlePrevButton, nextButton, handleNextButton }) => {
-    return (  
+
+const ShipsTable = ({ allShips, showShips, prevButton, handlePrevButton, nextButton, handleNextButton }) => {
+    return (
         <section className='ships'>
            <div className="ships--grid">
-            {
-                allShips.length && showShips
-                ? (
-                    <div className="table ships-table">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th className="table-primary">Name</th>
-                          <th>MGLT/h<span className="hide-sm">our</span></th>
-                          <th>Ressuply Stops</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {allShips.map(ship => <SingleShip key={ship.id} shipInfo={ship} />)}
-                      </tbody>
-                      </table>
-                      </div>
-                )
-                : null
-            }
-                <div className="ships--grid__navigation">
-                    { prevButton ? <button className='btn btn-small' onClick={handlePrevButton}>Previous Ships</button> : null }
-                    { nextButton && showShips ? <button className='btn btn-small' onClick={handleNextButton}>Next Ships</button> : null }
-                </div>
+                <AllShips
+                  allShips={allShips}
+                  showShips={showShips}
+                />
+                <NavigationButtons
+                  showShips={showShips}
+                  prevButton={prevButton}
+                  handlePrevButton={handlePrevButton}
+                  nextButton={nextButton}
+                  handleNextButton={handleNextButton}
+                />
             </div>
-        </section>  
-    )   
+        </section>
+    )
 }
 
 export default ShipsTable
