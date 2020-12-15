@@ -13,7 +13,7 @@ const ShipsTable = ({allShips, showShips, prevButton, handlePrevButton, nextButt
                       <thead>
                         <tr>
                           <th className="table-primary">Name</th>
-                          <th>MGLT/hour</th>
+                          <th>MGLT/h<span className="hide-sm">our</span></th>
                           <th>Ressuply Stops</th>
                         </tr>
                       </thead>
