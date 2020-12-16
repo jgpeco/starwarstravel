@@ -93,8 +93,9 @@ To run unit tests, you can use this command:
 npm test
 ```
 
-It will run the tests created with jest and react-testing-library.
-The app has a simple objective and a few components to achieve its purpose, so, I didn't think it was neccessary to insert integration tests. However, some simple e2e tests were made using Cypress. They can be accessed (and implemented) following this command:
+It will run the tests created with jest and react-testing-library.\
+The app has a simple objective and a few components to achieve its purpose, so, I didn't think it was neccessary to insert integration tests.\
+However, some simple e2e tests were made using Cypress. They can be accessed (and implemented) following this command:
 
 ```node
 npm run cypress:open
@@ -102,11 +103,17 @@ npm run cypress:open
 
 ## Additional Information
 
-The strucuture of the app is as follow: - src - components
-This are unit components that, most of the time, have one objective and will only perform one task. - containers
-This are container components that dictates where each unit component should be. - services
-Functions isolated to the main structure of the app, cleaning the App.js and separating the purpose of each file. - App.js
-Where most of the main functions and states of the app are stored.
+The strucuture of the app is as follow:
+
+- [src]
+- [components]
+  This are unit components that, most of the time, have one objective and will only perform one task.\
+- [containers]
+  This are container components that dictates where each unit component should be.\
+- [services]
+  Functions isolated to the main structure of the app, cleaning the App.js and separating the purpose of each file.\
+- [App.js]
+  Where most of the main functions and states of the app are stored.\
 
 ## Conclusion
 
