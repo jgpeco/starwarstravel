@@ -137,7 +137,7 @@ nav .navbar {
   align-items: center;
   padding: 1.5rem;
 }
-nav .navbar .btn-hide {
+nav .navbar .btn-hidden {
   font-family: 'Russo One', sans-serif;
   color: #ffe81f;
   font-size: 3rem;
