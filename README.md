@@ -105,14 +105,14 @@ npm run cypress:open
 
 The strucuture of the app is as follow:
 
-- [src]<br>
-- [components]<br>
+- **src**<br>
+- **components**<br>
   This are unit components that, most of the time, have one objective and will only perform one task.
-- [containers]<br>
+- **containers**<br>
   This are container components that dictates where each unit component should be.
-- [services]<br>
-  Functions isolated to the main structure of the app, cleaning the App.js and separating the purpose of each file.
-- [App.js]<br>
+- **services**<br>
+  Functions isolated of the main structure of the app, cleaning App.js and separating the purpose of each file.
+- **App.js**<br>
   Where most of the main functions and states of the app are stored.
 
 ## Conclusion
